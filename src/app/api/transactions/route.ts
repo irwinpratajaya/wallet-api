@@ -39,7 +39,7 @@ export async function GET(request: Request) {
 export async function POST(request: Request) {
   try {
     const userId = await auth(request);
-    const { amount, type, description, category_id, wallet_id } = await request.json();
+    const { amount, type, description, category_id, wallet_id, date } = await request.json();
 
     if (!amount || !type || !category_id || !wallet_id) {
       return NextResponse.json(
@@ -94,7 +94,8 @@ export async function POST(request: Request) {
         type,
         description,
         category_id,
-        wallet_id
+        wallet_id,
+        date: date || new Date().toISOString()
       }])
       .select()
       .single();
